@@ -1,4 +1,4 @@
-= Test networking app for MIT SP2015 21W.789.
+= Test location app for MIT SP2015 21W.789.
 
 == License
 
