@@ -27,6 +27,8 @@ public class GetLocAndLogData extends Service {
 
     private final int REQUEST_LOCATION_UPDATE_TIMER = 30*1000;
     private final int REQUEST_LOCATION_UPDATE_MINDISTANCE_METER = 0;
+    LocationManager locationManager;
+    LocationListener locationListener;
 
     public GetLocAndLogData() {
     }
@@ -74,7 +76,7 @@ public class GetLocAndLogData extends Service {
         String provider = intent.getStringExtra("provider");
         Toast.makeText(this, "Service Started with provider: " + provider, Toast.LENGTH_LONG).show();
 
-        LocationListener locationListener = new LocationListener() {
+        locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 double lat = location.getLatitude();
@@ -97,7 +99,7 @@ public class GetLocAndLogData extends Service {
             public void onProviderDisabled(String provider) {}
         };
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(
                 provider, //LocationProvider.NETWORK_PROVIDER, // GPS_PROVIDER
                 REQUEST_LOCATION_UPDATE_TIMER, // 5*60*1000
@@ -130,6 +132,7 @@ public class GetLocAndLogData extends Service {
     @Override
     public void onDestroy() {
 //        timer.cancel();
+        locationManager.removeUpdates(locationListener);
         super.onDestroy();
         Toast.makeText(this, "Service Destroyed", Toast.LENGTH_LONG).show();
     }
