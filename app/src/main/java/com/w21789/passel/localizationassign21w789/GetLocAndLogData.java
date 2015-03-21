@@ -25,8 +25,8 @@ public class GetLocAndLogData extends Service {
     //For running automated tasks
     private Timer timer;
 
-    private final int REQUEST_LOCATION_UPDATE_TIMER = 10*1000;
-    private final int REQUEST_LOCATION_UPDATE_MINDISTANCE_METER = 5;
+    private final int REQUEST_LOCATION_UPDATE_TIMER = 30*1000;
+    private final int REQUEST_LOCATION_UPDATE_MINDISTANCE_METER = 0;
 
     public GetLocAndLogData() {
     }
