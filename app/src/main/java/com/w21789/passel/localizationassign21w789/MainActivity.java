@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,8 @@ public class MainActivity extends ActionBarActivity {
 
     ArrayList<String> dataItems=new ArrayList<String>();
     ArrayAdapter<String> adapter;
+
+    Intent intentName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +82,21 @@ public class MainActivity extends ActionBarActivity {
 
     //Start gathering data!
     public void startGathering(View view) {
-        startService(new Intent(getBaseContext(), GetLocAndLogData.class));
+        String provider = "network";
+        Switch gpsSwitch = (Switch) findViewById(R.id.switch1);
+        if (gpsSwitch.isChecked()){
+            provider = "gps";
+        }
+        intentName = new Intent(getBaseContext(), GetLocAndLogData.class);
+        intentName.putExtra("provider", provider);
+        startService(intentName);
     }
 
     //Stop gathering data!
     public void stopGathering(View view) {
-        stopService(new Intent(getBaseContext(), GetLocAndLogData.class));
+        if (intentName != null) {
+            stopService(intentName);
+        }
     }
 
     @Override
